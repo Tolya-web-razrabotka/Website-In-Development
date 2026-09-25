@@ -10,14 +10,14 @@
         :root {
             --bg: #fafafa;
             --fg: #1a1a1a;
-            --line: rgba(26, 26, 26, 0.35);
+            --line: rgba(26, 26, 26, 0.3);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #0f0f0f;
                 --fg: #ededed;
-                --line: rgba(237, 237, 237, 0.35);
+                --line: rgba(237, 237, 237, 0.3);
             }
         }
 
@@ -46,7 +46,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         main {
@@ -54,7 +54,12 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            animation: fade-in 1.6s ease-out both;
+        }
+
+        /* окно, из которого текст плавно «выезжает» снизу */
+        .mask {
+            overflow: hidden;
+            padding: 0.1em 0;
         }
 
         h1 {
@@ -64,21 +69,22 @@
             line-height: 1.4;
             /* компенсирует letter-spacing после последней буквы, чтобы текст был строго по центру */
             margin-right: -0.18em;
+            animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
 
+        /* тонкая линия прорисовывается от центра к краям и остаётся на месте */
         .line {
             width: 48px;
             height: 1px;
             margin-top: clamp(20px, 3vw, 32px);
             background: var(--line);
-            transform-origin: center;
-            animation: breathe 4s ease-in-out infinite;
+            animation: draw 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
         }
 
-        @keyframes fade-in {
+        @keyframes rise {
             from {
                 opacity: 0;
-                transform: translateY(8px);
+                transform: translateY(100%);
             }
             to {
                 opacity: 1;
@@ -86,19 +92,17 @@
             }
         }
 
-        @keyframes breathe {
-            0%, 100% {
-                transform: scaleX(0.4);
-                opacity: 0.5;
+        @keyframes draw {
+            from {
+                transform: scaleX(0);
             }
-            50% {
+            to {
                 transform: scaleX(1);
-                opacity: 1;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            main,
+            h1,
             .line {
                 animation: none;
             }
@@ -107,7 +111,9 @@
 </head>
 <body>
     <main>
-        <h1>Сайт в разработке</h1>
+        <div class="mask">
+            <h1>Сайт в разработке</h1>
+        </div>
         <div class="line" aria-hidden="true"></div>
     </main>
 </body>
