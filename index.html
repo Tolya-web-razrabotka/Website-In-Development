@@ -56,7 +56,6 @@
             text-align: center;
         }
 
-        /* окно, из которого текст плавно «выезжает» снизу */
         .mask {
             overflow: hidden;
             padding: 0.1em 0;
@@ -67,12 +66,10 @@
             font-weight: 300;
             letter-spacing: 0.18em;
             line-height: 1.4;
-            /* компенсирует letter-spacing после последней буквы, чтобы текст был строго по центру */
             margin-right: -0.18em;
             animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
 
-        /* тонкая линия прорисовывается от центра к краям и остаётся на месте */
         .line {
             width: 48px;
             height: 1px;
